@@ -59,21 +59,31 @@
     }
 
     bm.onKeydown = function (event) {
-
-        if (event.which == 37) { //left
+        var activeKeys = KeyboardJS.activeKeys().join();
+        if (activeKeys == 'left') { //left
             if (this.state !== 'move') {
                 this.dX = -2;
                 this.setState({action: 'move', transformation: true});
             }
-        } else if (event.which == 38) { //up
-            this.setState({action: 'big_jump'});
-        } else if (event.which == 39) { //right
+        } else if (activeKeys == 'up') { //up
+            this.setState({action: 'jump'});
+        } else if (activeKeys == 'right') { //right
             if (this.state !== 'move') {
                 this.dX = 2;
                 this.setState({action: 'move'});
             }
-        } else if (event.which == 40) { //down
+        } else if (activeKeys == 'down') { //down
             this.setState({action: 'lean'});
+        } else if (activeKeys == 'left,up' || activeKeys == 'up,left') {
+        } else if (activeKeys == 'left,down' || activeKeys == 'down,left') {
+            this.dX = -2;
+            this.setState({action: 'lean_move'});
+        } else if (activeKeys == 'right,up' || activeKeys == 'right,up') {
+            this.dX = 5;
+            this.setState({action: 'big_jump'});
+        } else if (activeKeys == 'right,down' || activeKeys == 'right,down') {
+            this.dX = 2;
+            this.setState({action: 'lean_move'});
         }
     }
 
