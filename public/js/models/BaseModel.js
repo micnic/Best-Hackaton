@@ -34,7 +34,6 @@
 
         this.currentAnimmation.x = this.currentAnimmation.x + this.dX;
 //        this.currentAnimmation.y = this.currentAnimmation.y + this.dY;
-        console.log('aaaa')
     }
 
     bm._initSprites = function (arrSprites) {
@@ -45,9 +44,17 @@
 
             var animation = new createjs.Sprite(spriteSheet);
 
+            animation.addEventListener('animationend', function (target, type, name, next) {
+                me.animationEnded(target, type, name, next)
+            });
+
             me.bnpAnimationObjects[element.animKey] = animation;
 
         });
+
+    }
+
+    bm.animationEnded = function(target, type, name, next) {
 
     }
 
@@ -93,6 +100,10 @@
         this.currentAnimmation = this.bnpAnimationObjects[state.action];
         this.currentAnimmation.x = currentPos.x;
         this.currentAnimmation.y = 288 - this.currentAnimmation.spriteSheet._frameHeight;
+//        this.currentAnimmation._currentFrame = 0;
+        this.currentAnimmation.onAnimationEnd = function() {
+            console.log('animation end')
+        }
 
         this.currentAnimmation.gotoAndPlay(state.action);
 
