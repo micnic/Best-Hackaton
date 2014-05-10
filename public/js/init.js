@@ -11,64 +11,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var imgMonsterARun = new Image();
 
-    canvas.addEventListener('keypress', function () {
-        hero.onKeypress.apply(null, arguments);
+    canvas.addEventListener('keypress', function (event) {
+        hero.onKeypress(event);
     });
-    canvas.addEventListener('keydown', function () {
-        hero.onKeydown.apply(null, arguments);
+    canvas.addEventListener('keydown', function (event) {
+        hero.onKeydown(event);
     });
-    canvas.addEventListener('keyup', function () {
-        hero.onKeyup.apply(null, arguments);
+    canvas.addEventListener('keyup', function (event) {
+        hero.onKeyup(event);
     });
 
     function init() {
         startGame();
-//        imgMonsterARun.onload = handleImageLoad;
-//        imgMonsterARun.onerror = handleImageError;
-//        imgMonsterARun.src = "public/img/move.png";
     }
 
     function startGame() {
 //        // create a new stage and point it at our canvas:
         stage = new createjs.Stage(canvas);
 
-        var element1 = {
-                images: ['public/img/move.png'],
-                // width, height & registration point of each sprite
-                frames: {width: 35, height: 35},
-                animations: {
-                    // start, end, next, speed
-                    move: [0, 9]
-                },
-                animKey: 'move'
-            },
-            element2 = {
-                images: ['public/img/idle.png'],
-                frames: {width: 25, height: 35},
-                animations: {
-                    // start, end, next, speed
-                    move: [0, 2]
-                },
-                animKey: 'idle'
-            }
-
         hero = new BaseModel({arrSprites: Ninja});
 
         hero.setAction({action: 'move'});
 
         stage.addChild(hero);
-//
+
         createjs.Ticker.addEventListener("tick", tick);
         createjs.Ticker.useRAF = true;
         createjs.Ticker.setFPS(10);
     }
 
-
-//
     function tick() {
         stage.update();
     }
-
-//
     init();
 });
