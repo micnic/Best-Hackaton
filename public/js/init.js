@@ -40,17 +40,20 @@ document.addEventListener('DOMContentLoaded', function () {
         var spriteSheet = new createjs.SpriteSheet({
 //            framerate: 5,
             // image to use
-            images: ['public/img/move.png', "public/img/idle.png"],
+            images: ['public/img/move.png', 'public/img/idle.png'],
             // width, height & registration point of each sprite
 //            frames: {width: 35, height: 35},
             frames: [
                 // x, y, width, height, imageIndex, regX, regY
                 [0, 0, 35, 35, 0], // 10 images
-                [0, 0, 25, 35, 1] // 3 images
+//                [0, 0, 25, 35, 1] // 3 images
             ],
             animations: {
-                move: [0, 9, 'move', 2],
-                idle: [10, 12, 'idle']
+                idle: {
+//                    frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    frames: [0, 1]
+                },
+                move: [4, 9, 'move', 20]
             }
         });
 
@@ -58,14 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
         bmpAnimation = new createjs.Sprite(spriteSheet);
 
         // start playing the first sequence:
-        bmpAnimation.gotoAndPlay("idle"); 	//animate
-
-        bmpAnimation.name = "monster1";
-        bmpAnimation.direction = 90;
-        bmpAnimation.vX = 1;
-        bmpAnimation.x = 16;
-        bmpAnimation.y = 32;
-
+        bmpAnimation.gotoAndPlay("move"); 	//animate
 //        bmpAnimation.gotoAndStop("move"); 	//animate
 
         bmpAnimation.currentFrame = 0;
@@ -82,26 +78,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function tick() {
-        // Hit testing the screen width, otherwise our sprite would disappear
-        if (bmpAnimation.x >= screen_width - 16) {
-            // We've reached the right side of our screen
-            // We need to walk left now to go back to our initial position
-            bmpAnimation.direction = -90;
-        }
-
-        if (bmpAnimation.x < 16) {
-            // We've reached the left side of our screen
-            // We need to walk right now
-            bmpAnimation.direction = 90;
-        }
-
-        // Moving the sprite based on the direction & the speed
-        if (bmpAnimation.direction == 90) {
-            bmpAnimation.x += bmpAnimation.vX;
-        }
-        else {
-            bmpAnimation.x -= bmpAnimation.vX;
-        }
+//        // Hit testing the screen width, otherwise our sprite would disappear
+//        if (bmpAnimation.x >= screen_width - 16) {
+//            // We've reached the right side of our screen
+//            // We need to walk left now to go back to our initial position
+//            bmpAnimation.direction = -90;
+//        }
+//
+//        if (bmpAnimation.x < 16) {
+//            // We've reached the left side of our screen
+//            // We need to walk right now
+//            bmpAnimation.direction = 90;
+//        }
+//
+//        // Moving the sprite based on the direction & the speed
+//        if (bmpAnimation.direction == 90) {
+//            bmpAnimation.x += bmpAnimation.vX;
+//        }
+//        else {
+//            bmpAnimation.x -= bmpAnimation.vX;
+//        }
 
         // update the stage:
         stage.update();
