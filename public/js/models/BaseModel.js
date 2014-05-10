@@ -94,7 +94,7 @@
         } else if (activeKeys == 'right,down' || activeKeys == 'down,right') {
             this.dx = 2;
             this.setState({action: 'lean_move'});
-        } else if (activeKeys == 'space,spacebar') {
+        } else if (activeKeys == 'space,spacebar' || activeKeys == 'left,space,spacebar' || activeKeys == 'space,spacebar,left' == 'right,space,spacebar' || activeKeys == 'space,spacebar,right') {
             this.dx = 0;
             this.waitFinish = true;
             this.setState({action: 'hit'});
