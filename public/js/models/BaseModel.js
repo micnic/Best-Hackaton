@@ -8,11 +8,13 @@
 
     bm.bnpAnimationObjects = {};
 
+    bm.waitFinish = false;
+
     bm.currentAnimmation = null;
 
     bm.Container_initialize = bm.initialize;
 
-    bm.dx = 0;
+    bm.dX = 0;
     bm.dy = 0;
 
     /*bm.onKeypress = function (event) {
@@ -44,45 +46,61 @@
 
             var animation = new createjs.Sprite(spriteSheet);
 
+            animation.addEventListener('animationend', function (target, type, name, next) {
+                me.animationEnded(target, type, name, next)
+            });
+
             me.bnpAnimationObjects[element.animKey] = animation;
 
         });
 
     }
 
+    bm.animationEnded = function(target, type, name, next) {
+        if(this.waitFinish) {
+            this.waitFinish = false;
+            this._setIdleState();
+        }
+    };
+
     bm.onKeydown = function (event) {
         var activeKeys = KeyboardJS.activeKeys().join();
         if (activeKeys == 'left') { //left
             if (this.state !== 'move') {
-                this.dx = -2;
+                this.dX = -2;
                 this.setState({action: 'move', transformation: true});
             }
         } else if (activeKeys == 'up') { //up
             this.setState({action: 'jump'});
         } else if (activeKeys == 'right') { //right
             if (this.state !== 'move') {
-                this.dx = 2;
+                this.dX = 2;
                 this.setState({action: 'move'});
             }
         } else if (activeKeys == 'down') { //down
             this.setState({action: 'lean'});
         } else if (activeKeys == 'left,up' || activeKeys == 'up,left') {
         } else if (activeKeys == 'left,down' || activeKeys == 'down,left') {
-            this.dx = -2;
+            this.dX = -2;
             this.setState({action: 'lean_move'});
-        } else if (activeKeys == 'right,up' || activeKeys == 'up,right') {
-            this.dx = 5;
+        } else if (activeKeys == 'right,up' || activeKeys == 'right,up') {
+            this.dX = 5;
+            this.waitFinish = true;
             this.setState({action: 'big_jump'});
-        } else if (activeKeys == 'right,down' || activeKeys == 'down,right') {
-            this.dx = 5;
+        } else if (activeKeys == 'right,down' || activeKeys == 'right,down') {
+            this.dX = 2;
             this.setState({action: 'lean_move'});
         }
     }
 
+    bm._setIdleState = function() {
+        this.dX = 0;
+        this.setState({action: 'idle'});
+    }
+
     bm.onKeyup = function (event) {
-        if (this.state !== 'idle') {
-            this.dx = 0;
-            this.setState({action: 'idle'});
+        if (this.state !== 'idle' && !this.waitFinish) {
+            this._setIdleState();
         }
     }
 
@@ -102,6 +120,7 @@
         this.currentAnimmation = this.bnpAnimationObjects[state.action];
         this.currentAnimmation.x = currentPos.x;
         this.currentAnimmation.y = 288 - this.currentAnimmation.spriteSheet._frameHeight;
+//        this.currentAnimmation._currentFrame = 0;
 
         this.currentAnimmation.gotoAndPlay(state.action);
 
