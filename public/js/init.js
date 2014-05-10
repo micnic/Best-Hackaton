@@ -1,19 +1,13 @@
 var bmpAnimation;
 var stage;
-var hero
+var hero;
+var screen_width = 512;
+var screen_height = 288;
 document.addEventListener('DOMContentLoaded', function () {
 //    var canvas = document.getElementById("game");
 
     var canvas = document.getElementById("game");
 
-    var screen_width;
-    var screen_height;
-
-    var imgMonsterARun = new Image();
-
-    /*document.addEventListener('keypress', function (event) {
-        hero.onKeypress(event);
-    });*/
     document.addEventListener('keydown', function (event) {
         hero.onKeydown(event);
     });
@@ -31,8 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         hero = new BaseModel({arrSprites: Ninja}, 'idle');
 
-        // hero.setState({action: 'idle'});
-
         stage.addChild(hero);
 
         createjs.Ticker.addEventListener("tick", tick);
@@ -43,5 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function tick() {
         stage.update();
     }
+
     init();
 });

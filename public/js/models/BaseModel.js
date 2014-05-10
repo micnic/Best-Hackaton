@@ -10,11 +10,11 @@
 
     bm.waitFinish = false;
 
-    bm.currentAnimmation = null;
+    bm.currentAnimation = null;
 
     bm.Container_initialize = bm.initialize;
 
-    bm.dX = 0;
+    bm.dx = 0;
     bm.dy = 0;
 
     /*bm.onKeypress = function (event) {
@@ -25,7 +25,7 @@
 
         this._initSprites(options.arrSprites);
 
-        this.currentAnimmation = this.bnpAnimationObjects[action];
+        this.currentAnimation = this.bnpAnimationObjects[action];
         this.setState({action: action});
 
 
@@ -34,8 +34,8 @@
 
     bm.handleTick = function () {
 
-        this.currentAnimmation.x = this.currentAnimmation.x + this.dx;
-//        this.currentAnimmation.y = this.currentAnimmation.y + this.dy;
+        this.currentAnimation.x = this.currentAnimation.x + this.dx;
+//        this.currentAnimation.y = this.currentAnimation.y + this.dy;
     }
 
     bm._initSprites = function (arrSprites) {
@@ -67,34 +67,38 @@
         var activeKeys = KeyboardJS.activeKeys().join();
         if (activeKeys == 'left') { //left
             if (this.state !== 'move') {
-                this.dX = -2;
+                this.dx = -2;
                 this.setState({action: 'move', transformation: true});
             }
         } else if (activeKeys == 'up') { //up
             this.setState({action: 'jump'});
         } else if (activeKeys == 'right') { //right
             if (this.state !== 'move') {
-                this.dX = 2;
+                this.dx = 2;
                 this.setState({action: 'move'});
             }
         } else if (activeKeys == 'down') { //down
             this.setState({action: 'lean'});
         } else if (activeKeys == 'left,up' || activeKeys == 'up,left') {
-        } else if (activeKeys == 'left,down' || activeKeys == 'down,left') {
-            this.dX = -2;
-            this.setState({action: 'lean_move'});
-        } else if (activeKeys == 'right,up' || activeKeys == 'right,up') {
-            this.dX = 5;
+            this.dx = -5;
             this.waitFinish = true;
             this.setState({action: 'big_jump'});
-        } else if (activeKeys == 'right,down' || activeKeys == 'right,down') {
-            this.dX = 2;
+        } else if (activeKeys == 'left,down' || activeKeys == 'down,left') {
+            this.dx = -2;
+            this.setState({action: 'lean_move'});
+
+        } else if (activeKeys == 'right,up' || activeKeys == 'up,right') {
+            this.dx = 5;
+            this.waitFinish = true;
+            this.setState({action: 'big_jump'});
+        } else if (activeKeys == 'right,down' || activeKeys == 'down,right') {
+            this.dx = 2;
             this.setState({action: 'lean_move'});
         }
     }
 
     bm._setIdleState = function() {
-        this.dX = 0;
+        this.dx = 0;
         this.setState({action: 'idle'});
     }
 
@@ -107,24 +111,32 @@
     bm.setState = function (state) {
 
         var currentPos = {
-            x: this.currentAnimmation.x,
-            y: this.currentAnimmation.y
+            x: this.currentAnimation.x,
+            y: this.currentAnimation.y
         };
 
-        if (this.currentAnimmation) {
-            stage.removeChild(this.currentAnimmation);
+        if (this.currentAnimation) {
+            stage.removeChild(this.currentAnimation);
         }
 
         this.state = state.action;
 
-        this.currentAnimmation = this.bnpAnimationObjects[state.action];
-        this.currentAnimmation.x = currentPos.x;
-        this.currentAnimmation.y = 288 - this.currentAnimmation.spriteSheet._frameHeight;
-//        this.currentAnimmation._currentFrame = 0;
+        this.currentAnimation = this.bnpAnimationObjects[state.action];
+        this.currentAnimation.x = currentPos.x;
+        this.currentAnimation.y = 288 - this.currentAnimation.spriteSheet._frameHeight;
 
-        this.currentAnimmation.gotoAndPlay(state.action);
+        if (this.currentAnimation.x >= screen_width) {
+            this.dx = 0;
+            this.currentAnimation.x = screen_width - this.currentAnimation.spriteSheet._frameWidth;
+            console.log(this.currentAnimation.x);
+        } else if (this.currentAnimation.x < 0) {
+            this.dx = 0;
+            this.currentAnimation.x = 0;
+        }
 
-        stage.addChild(this.currentAnimmation);
+        this.currentAnimation.gotoAndPlay(state.action);
+
+        stage.addChild(this.currentAnimation);
     }
 
     window.BaseModel = BaseModel;

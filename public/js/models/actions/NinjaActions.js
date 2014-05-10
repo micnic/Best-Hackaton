@@ -9,7 +9,6 @@ var Ninja = [{
         images: ['public/img/idle.png'],
         frames: {width: 25, height: 35},
         animations: {
-            // start, end, next, speed
             move: [0, 2]
         },
         animKey: 'idle'
