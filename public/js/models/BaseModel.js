@@ -59,7 +59,7 @@
                 this.setState({action: 'move', transformation: true});
             }
         } else if (activeKeys == 'up') { //up
-            this.setState({action: 'big_jump'});
+            this.setState({action: 'jump'});
         } else if (activeKeys == 'right') { //right
             if (this.state !== 'move') {
                 this.dX = 2;
@@ -67,14 +67,16 @@
             }
         } else if (activeKeys == 'down') { //down
             this.setState({action: 'lean'});
-        } else if (activeKeys == 'left,up' || activeKeys == 'left,up') {
-
-        } else if (activeKeys == 'left,down' || activeKeys == 'left,down') {
-
+        } else if (activeKeys == 'left,up' || activeKeys == 'up,left') {
+        } else if (activeKeys == 'left,down' || activeKeys == 'down,left') {
+            this.dX = -2;
+            this.setState({action: 'lean_move'});
         } else if (activeKeys == 'right,up' || activeKeys == 'right,up') {
-
+            this.dX = 5;
+            this.setState({action: 'big_jump'});
         } else if (activeKeys == 'right,down' || activeKeys == 'right,down') {
-
+            this.dX = 2;
+            this.setState({action: 'lean_move'});
         }
     }
 
