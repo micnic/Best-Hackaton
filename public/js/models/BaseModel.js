@@ -65,19 +65,28 @@
 
     bm.onKeydown = function (event) {
         var activeKeys = KeyboardJS.activeKeys().join();
-        if (activeKeys == 'left') { //left
+
+        if (activeKeys.indexOf('left') >= 0/* && !this.rotate*/) {
+            //this.rotate = true;
+            this.currentAnimation.setTransform(this.currentAnimation.x, this.currentAnimation.y, -1);
+        } else if (activeKeys.indexOf('right') >= 0/* && this.rotate*/) {
+            //this.rotate = false;
+            this.currentAnimation.setTransform(this.currentAnimation.x, this.currentAnimation.y, 1);
+        }
+
+        if (activeKeys == 'left') {
             if (this.state !== 'move') {
                 this.dx = -2;
-                this.setState({action: 'move', transformation: true});
+                this.setState({action: 'move'});
             }
-        } else if (activeKeys == 'up') { //up
+        } else if (activeKeys == 'up') {
             this.setState({action: 'jump'});
-        } else if (activeKeys == 'right') { //right
+        } else if (activeKeys == 'right') {
             if (this.state !== 'move') {
                 this.dx = 2;
                 this.setState({action: 'move'});
             }
-        } else if (activeKeys == 'down') { //down
+        } else if (activeKeys == 'down') {
             this.setState({action: 'lean'});
         } else if (activeKeys == 'left,up' || activeKeys == 'up,left') {
             this.dx = -5;
@@ -94,7 +103,7 @@
         } else if (activeKeys == 'right,down' || activeKeys == 'down,right') {
             this.dx = 2;
             this.setState({action: 'lean_move'});
-        } else if ((activeKeys == 'space,spacebar' || activeKeys == 'left,space,spacebar' || activeKeys == 'space,spacebar,left' == 'right,space,spacebar' || activeKeys == 'space,spacebar,right') &&  !this.waitFinish) {
+        } else if ((activeKeys == 'space,spacebar'  || activeKeys == 'left,space,spacebar' || activeKeys == 'space,spacebar,left' == 'right,space,spacebar' || activeKeys == 'space,spacebar,right') && !this.waitFinish) {
             this.dx = 0;
             this.waitFinish = true;
             this.setState({action: 'hit'});

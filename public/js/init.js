@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
 //    var canvas = document.getElementById("game");
 
     var canvas = document.getElementById("game");
+    canvas.width = screen_width;
+    canvas.height = screen_height;
 
     document.addEventListener('keydown', function (event) {
         hero.onKeydown(event);

@@ -5,8 +5,9 @@ body {
 }
 
 #game {
+    background-image: url('../img/background.png');
 	outline: none;
-	background: #ccc;
+	/*background: #ccc;*/
 	margin: 0 auto;
 	top: 50%;
 	display: block;
