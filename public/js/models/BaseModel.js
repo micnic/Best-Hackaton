@@ -19,7 +19,7 @@
 
     /*bm.onKeypress = function (event) {
 
-    }*/
+     }*/
 
     bm.initialize = function (options, action) {
 
@@ -56,8 +56,8 @@
 
     }
 
-    bm.animationEnded = function(target, type, name, next) {
-        if(this.waitFinish) {
+    bm.animationEnded = function (target, type, name, next) {
+        if (this.waitFinish) {
             this.waitFinish = false;
             this._setIdleState();
         }
@@ -94,10 +94,22 @@
         } else if (activeKeys == 'right,down' || activeKeys == 'down,right') {
             this.dx = 2;
             this.setState({action: 'lean_move'});
+        } else if (activeKeys == 'space,spacebar') {
+            this.dx = 0;
+            this.waitFinish = true;
+            this.setState({action: 'hit'});
+        } else if (activeKeys == 'down,space,spacebar' || activeKeys == 'space,spacebar,down') {
+            this.dx = 0;
+            this.waitFinish = true;
+            this.setState({action: 'lean_hit'});
+        } else if (activeKeys == 'up,space,spacebar' || activeKeys == 'space,spacebar,up') {
+            this.dx = 0;
+            this.waitFinish = true;
+            this.setState({action: 'jump_hit'});
         }
     }
 
-    bm._setIdleState = function() {
+    bm._setIdleState = function () {
         this.dx = 0;
         this.setState({action: 'idle'});
     }
