@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 animKey: 'idle'
             }
 
-        hero = new BaseModel({arrSprites: [element1, element2]});
+        hero = new BaseModel({arrSprites: Ninja});
 
         hero.setAction({action: 'move'});
 
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
         createjs.Ticker.setFPS(10);
     }
 
-    
+
 //
     function tick() {
         stage.update();
