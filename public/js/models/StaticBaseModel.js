@@ -1,23 +1,34 @@
-(function (hero) {
+(function () {
     var StaticBaseModel = function (options, action) {
         this.initialize(options);
     }
 
     var bs = StaticBaseModel.prototype = new createjs.Container(); // inherit from Container
-    bs.bitmapObj = null,
+
+
     bs.initialize = function (options) {
+        var element = {
+            images: [options.imgPath],
+            frames: {width: 20, height: 25},
+            animations: {
+                move: [0]
+            }
+        }
+        var spriteSheet = new createjs.SpriteSheet(element);
 
-        this.bitmapObj = new createjs.Bitmap(options.imgPath);
+        this.currentAnimation = new createjs.Sprite(spriteSheet);
 
-        this.bitmapObj.x = options.x;
-        this.bitmapObj.y = options.y;
+        this.currentAnimation.x = options.x;
+        this.currentAnimation.y = options.y;
+
+        stage.addChild(this.currentAnimation);
 
         this.on("tick", this.handleTick);
     }
 
-    bs.handleTick = function() {
-        console.log(hero)
+    bs.handleTick = function () {
+        this.currentAnimation.x -= hero.dx;
     }
 
     window.StaticBaseModel = StaticBaseModel;
-}(hero));
+}());
