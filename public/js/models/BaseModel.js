@@ -12,7 +12,7 @@
 
     bm.Container_initialize = bm.initialize;
 
-    bm.dX = 0;
+    bm.dx = 0;
     bm.dy = 0;
 
     /*bm.onKeypress = function (event) {
@@ -32,9 +32,8 @@
 
     bm.handleTick = function () {
 
-        this.currentAnimmation.x = this.currentAnimmation.x + this.dX;
-//        this.currentAnimmation.y = this.currentAnimmation.y + this.dY;
-        console.log('aaaa')
+        this.currentAnimmation.x = this.currentAnimmation.x + this.dx;
+//        this.currentAnimmation.y = this.currentAnimmation.y + this.dy;
     }
 
     bm._initSprites = function (arrSprites) {
@@ -55,34 +54,34 @@
         var activeKeys = KeyboardJS.activeKeys().join();
         if (activeKeys == 'left') { //left
             if (this.state !== 'move') {
-                this.dX = -2;
+                this.dx = -2;
                 this.setState({action: 'move', transformation: true});
             }
         } else if (activeKeys == 'up') { //up
             this.setState({action: 'jump'});
         } else if (activeKeys == 'right') { //right
             if (this.state !== 'move') {
-                this.dX = 2;
+                this.dx = 2;
                 this.setState({action: 'move'});
             }
         } else if (activeKeys == 'down') { //down
             this.setState({action: 'lean'});
         } else if (activeKeys == 'left,up' || activeKeys == 'up,left') {
         } else if (activeKeys == 'left,down' || activeKeys == 'down,left') {
-            this.dX = -2;
+            this.dx = -2;
             this.setState({action: 'lean_move'});
-        } else if (activeKeys == 'right,up' || activeKeys == 'right,up') {
-            this.dX = 5;
+        } else if (activeKeys == 'right,up' || activeKeys == 'up,right') {
+            this.dx = 5;
             this.setState({action: 'big_jump'});
-        } else if (activeKeys == 'right,down' || activeKeys == 'right,down') {
-            this.dX = 2;
+        } else if (activeKeys == 'right,down' || activeKeys == 'down,right') {
+            this.dx = 5;
             this.setState({action: 'lean_move'});
         }
     }
 
     bm.onKeyup = function (event) {
         if (this.state !== 'idle') {
-            this.dX = 0;
+            this.dx = 0;
             this.setState({action: 'idle'});
         }
     }
