@@ -1,6 +1,6 @@
 var bmpAnimation;
 var stage;
-var tmp
+var hero
 document.addEventListener('DOMContentLoaded', function () {
 //    var canvas = document.getElementById("game");
 
@@ -11,9 +11,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var imgMonsterARun = new Image();
 
-    canvas.addEventListener('keypress', function () {});
-    canvas.addEventListener('keydown', function () {});
-    canvas.addEventListener('keyup', function () {});
+    canvas.addEventListener('keypress', function () {
+        hero.onKeypress.apply(null, arguments);
+    });
+    canvas.addEventListener('keydown', function () {
+        hero.onKeydown.apply(null, arguments);
+    });
+    canvas.addEventListener('keyup', function () {
+        hero.onKeyup.apply(null, arguments);
+    });
 
     function init() {
         startGame();
@@ -46,16 +52,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 animKey: 'idle'
             }
 
-        tmp = new BaseModel({arrSprites: [element1, element2]});
+        hero = new BaseModel({arrSprites: Ninja});
 
-        tmp.setAction({action: 'move'});
+        hero.setAction({action: 'move'});
 
-        stage.addChild(tmp);
+        stage.addChild(hero);
 //
         createjs.Ticker.addEventListener("tick", tick);
         createjs.Ticker.useRAF = true;
         createjs.Ticker.setFPS(10);
     }
+
 
 //
     function tick() {

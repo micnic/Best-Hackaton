@@ -6,6 +6,26 @@
 
     var bm = BaseModel.prototype = new createjs.Container(); // inherit from Container
 
+    bm.onKeypress = function(event) {
+        console.log(event)
+    }
+
+    bm.onKeydown = function(event) {
+
+        if(event.which == 37) { //left
+
+        } else if(event.which == 38) { //up
+
+        } else if(event.which == 39) { //right
+
+        } else if(event.which == 40) { //down
+
+        }
+    }
+
+    bm.onKeyup = function(event) {
+        console.log(event)
+    }
     bm.bnpAnimationObjects = {};
 
     bm.currentAnimmation = null;
