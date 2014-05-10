@@ -4,15 +4,18 @@ var tmp
 document.addEventListener('DOMContentLoaded', function () {
 //    var canvas = document.getElementById("game");
 
-    var canvas;
+    var canvas = document.getElementById("game");
 
     var screen_width;
     var screen_height;
 
     var imgMonsterARun = new Image();
 
+    canvas.addEventListener('keypress', function () {});
+    canvas.addEventListener('keydown', function () {});
+    canvas.addEventListener('keyup', function () {});
+
     function init() {
-        canvas = document.getElementById("game");
         startGame();
 //        imgMonsterARun.onload = handleImageLoad;
 //        imgMonsterARun.onerror = handleImageError;
