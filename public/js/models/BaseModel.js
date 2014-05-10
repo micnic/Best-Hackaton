@@ -52,21 +52,29 @@
     }
 
     bm.onKeydown = function (event) {
-
-        if (event.which == 37) { //left
+        var activeKeys = KeyboardJS.activeKeys().join();
+        if (activeKeys == 'left') { //left
             if (this.state !== 'move') {
                 this.dX = -2;
                 this.setState({action: 'move', transformation: true});
             }
-        } else if (event.which == 38) { //up
+        } else if (activeKeys == 'up') { //up
             this.setState({action: 'big_jump'});
-        } else if (event.which == 39) { //right
+        } else if (activeKeys == 'right') { //right
             if (this.state !== 'move') {
                 this.dX = 2;
                 this.setState({action: 'move'});
             }
-        } else if (event.which == 40) { //down
+        } else if (activeKeys == 'down') { //down
             this.setState({action: 'lean'});
+        } else if (activeKeys == 'left,up' || activeKeys == 'left,up') {
+
+        } else if (activeKeys == 'left,down' || activeKeys == 'left,down') {
+
+        } else if (activeKeys == 'right,up' || activeKeys == 'right,up') {
+
+        } else if (activeKeys == 'right,down' || activeKeys == 'right,down') {
+
         }
     }
 

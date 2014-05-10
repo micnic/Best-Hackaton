@@ -11,13 +11,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var imgMonsterARun = new Image();
 
-    /*canvas.addEventListener('keypress', function (event) {
+    /*document.addEventListener('keypress', function (event) {
         hero.onKeypress(event);
     });*/
-    canvas.addEventListener('keydown', function (event) {
+    document.addEventListener('keydown', function (event) {
         hero.onKeydown(event);
     });
-    canvas.addEventListener('keyup', function (event) {
+    document.addEventListener('keyup', function (event) {
         hero.onKeyup(event);
     });
 
