@@ -65,10 +65,17 @@
 
     bm.onKeydown = function (event) {
         var activeKeys = KeyboardJS.activeKeys().join();
+
+        if (activeKeys.indexOf('left') >= 0) {
+            this.currentAnimation.setTransform(0, 0, -1);
+        } else if (activeKeys.indexOf('right') >= 0) {
+            this.currentAnimation.setTransform(0, 0, 1);
+        }
+
         if (activeKeys == 'left') { //left
             if (this.state !== 'move') {
                 this.dx = -2;
-                this.setState({action: 'move', transformation: true});
+                this.setState({action: 'move'});
             }
         } else if (activeKeys == 'up') { //up
             this.setState({action: 'jump'});

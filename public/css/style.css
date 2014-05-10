@@ -5,7 +5,6 @@ body {
 }
 
 #game {
-	outline: none;
 	background: #ccc;
 	margin: 0 auto;
 	top: 50%;
