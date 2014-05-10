@@ -79,30 +79,30 @@
             }
         } else if (activeKeys == 'down') { //down
             this.setState({action: 'lean'});
-        } else if ((activeKeys == 'left,up' || activeKeys == 'up,left') && !this.waitFinish) {
+        } else if (activeKeys == 'left,up' || activeKeys == 'up,left') {
             this.dx = -5;
             this.waitFinish = true;
             this.setState({action: 'big_jump'});
-        } else if ((activeKeys == 'left,down' || activeKeys == 'down,left') && !this.waitFinish) {
+        } else if (activeKeys == 'left,down' || activeKeys == 'down,left') {
             this.dx = -2;
             this.setState({action: 'lean_move'});
 
-        } else if ((activeKeys == 'right,up' || activeKeys == 'up,right') && !this.waitFinish) {
+        } else if (activeKeys == 'right,up' || activeKeys == 'up,right') {
             this.dx = 5;
             this.waitFinish = true;
             this.setState({action: 'big_jump'});
         } else if (activeKeys == 'right,down' || activeKeys == 'down,right') {
             this.dx = 2;
             this.setState({action: 'lean_move'});
-        } else if (activeKeys == 'space,spacebar' && !this.waitFinish) {
+        } else if ((activeKeys == 'space,spacebar' || activeKeys == 'left,space,spacebar' || activeKeys == 'space,spacebar,left' == 'right,space,spacebar' || activeKeys == 'space,spacebar,right') &&  !this.waitFinish) {
             this.dx = 0;
             this.waitFinish = true;
             this.setState({action: 'hit'});
-        } else if ((activeKeys == 'down,space,spacebar' || activeKeys == 'space,spacebar,down') && !this.waitFinish) {
+        } else if (activeKeys == 'down,space,spacebar' || activeKeys == 'space,spacebar,down') {
             this.dx = 0;
             this.waitFinish = true;
             this.setState({action: 'lean_hit'});
-        } else if ((activeKeys == 'up,space,spacebar' || activeKeys == 'space,spacebar,up') && !this.waitFinish) {
+        } else if (activeKeys == 'up,space,spacebar' || activeKeys == 'space,spacebar,up') {
             this.dx = 0;
             this.waitFinish = true;
             this.setState({action: 'jump_hit'});
