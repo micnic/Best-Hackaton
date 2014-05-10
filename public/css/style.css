@@ -1,0 +1,12 @@
+body {
+	height: 100%;
+	margin: 0;
+	position: relative;
+}
+
+#game {
+	background: #ccc;
+	margin: 0 auto;
+	top: 50%;
+	display: block;
+}
