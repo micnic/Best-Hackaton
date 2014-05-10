@@ -19,15 +19,29 @@
         this.currentAnimation = new createjs.Sprite(spriteSheet);
 
         this.currentAnimation.x = options.x;
-        this.currentAnimation.y = options.y;
+
+        if(!options.y) {
+            this.currentAnimation.y = hero.currentAnimation.y;
+        } else {
+            this.currentAnimation.y = options.y;
+        }
 
         stage.addChild(this.currentAnimation);
 
         this.on("tick", this.handleTick);
     }
 
+    bs.checkCollision = function() {
+
+        var distance = this.currentAnimation.x - hero.currentAnimation.x;
+        if(Math.abs(distance) < this.currentAnimation.spriteSheet._frameWidth) {
+            console.log('collision');
+        }
+    };
+
     bs.handleTick = function () {
         this.currentAnimation.x -= hero.dx;
+        this.checkCollision();
     }
 
     window.StaticBaseModel = StaticBaseModel;
