@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var imgMonsterARun = new Image();
 
-    canvas.addEventListener('keypress', function (event) {
+    /*canvas.addEventListener('keypress', function (event) {
         hero.onKeypress(event);
-    });
+    });*/
     canvas.addEventListener('keydown', function (event) {
         hero.onKeydown(event);
     });
@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', function () {
 //        // create a new stage and point it at our canvas:
         stage = new createjs.Stage(canvas);
 
-        hero = new BaseModel({arrSprites: Ninja});
+        hero = new BaseModel({arrSprites: Ninja}, 'idle');
 
-        hero.setAction({action: 'move'});
+        // hero.setState({action: 'idle'});
 
         stage.addChild(hero);
 

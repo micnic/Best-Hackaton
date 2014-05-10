@@ -1,7 +1,7 @@
 (function () {
 
-    var BaseModel = function (options) {
-        this.initialize(options);
+    var BaseModel = function (options, action) {
+        this.initialize(options, action);
     }
 
     var bm = BaseModel.prototype = new createjs.Container(); // inherit from Container
@@ -15,17 +15,17 @@
     bm.dX = 0;
     bm.dy = 0;
 
-    bm.onKeypress = function (event) {
-        console.log(event)
-    }
+    /*bm.onKeypress = function (event) {
 
-    bm.onKeyup = function (event) {
-        console.log(event)
-    }
+    }*/
 
-    bm.initialize = function (options) {
+    bm.initialize = function (options, action) {
 
         this._initSprites(options.arrSprites);
+
+        this.currentAnimmation = this.bnpAnimationObjects[action];
+        this.setState({action: action});
+
 
         this.on("tick", this.handleTick);
     }
@@ -54,32 +54,47 @@
     bm.onKeydown = function (event) {
 
         if (event.which == 37) { //left
-            this.dX = -1;
-            this.setAction({action: 'move', transformation: true});
-
+            if (this.state !== 'move') {
+                this.dX = -2;
+                this.setState({action: 'move', transformation: true});
+            }
         } else if (event.which == 38) { //up
-            this.setAction({action: 'jump'});
+            this.setState({action: 'big_jump'});
         } else if (event.which == 39) { //right
-            this.dX = 1;
-            this.setAction({action: 'move'});
+            if (this.state !== 'move') {
+                this.dX = 2;
+                this.setState({action: 'move'});
+            }
         } else if (event.which == 40) { //down
-            this.setAction({action: 'lean'});
+            this.setState({action: 'lean'});
         }
     }
 
-    bm.setAction = function (direction) {
+    bm.onKeyup = function (event) {
+        if (this.state !== 'idle') {
+            this.dX = 0;
+            this.setState({action: 'idle'});
+        }
+    }
+
+    bm.setState = function (state) {
+
+        var currentPos = {
+            x: this.currentAnimmation.x,
+            y: this.currentAnimmation.y
+        };
 
         if (this.currentAnimmation) {
             stage.removeChild(this.currentAnimmation);
         }
 
-        if (direction.transform) {
-            //TODO transform
-        } else {
-            this.currentAnimmation = this.bnpAnimationObjects[direction.action];
+        this.state = state.action;
 
-            this.currentAnimmation.gotoAndPlay(direction.action);
-        }
+        this.currentAnimmation = this.bnpAnimationObjects[state.action];
+        this.currentAnimmation.x = currentPos.x;
+        this.currentAnimmation.y = 288 - this.currentAnimmation.spriteSheet._frameHeight;
+
+        this.currentAnimmation.gotoAndPlay(state.action);
 
         stage.addChild(this.currentAnimmation);
     }
