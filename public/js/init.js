@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
         createjs.Ticker.setFPS(10);
     }
 
+    
 //
     function tick() {
         stage.update();
