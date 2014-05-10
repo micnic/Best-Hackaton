@@ -35,6 +35,9 @@
 
         var distance = this.currentAnimation.x - hero.currentAnimation.x;
         if(Math.abs(distance) < this.currentAnimation.spriteSheet._frameWidth) {
+
+            stage.removeChild(this);
+            delete this;
             console.log('collision');
         }
     };
