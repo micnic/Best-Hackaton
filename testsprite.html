@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+	<head>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				var test = document.getElementById('test');
+				var max = 75
+				setInterval(function () {
+					if (test.style.backgroundPosition === max + 'px') {
+						test.style.backgroundPosition = 0;
+					} else {
+						test.style.backgroundPosition = (parseInt(test.style.backgroundPosition) + 25) + 'px';
+					}
+				}, 100);
+			});
+		</script>
+		<style>
+			#test {
+				background: url(public/img/idle.png);
+				background-position: 0;
+				width: 25px;
+				height: 35px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="test"></div>
+	</body>
+</html>
