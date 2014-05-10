@@ -8,6 +8,8 @@
 
     bm.bnpAnimationObjects = {};
 
+    bm.waitFinish = false;
+
     bm.currentAnimmation = null;
 
     bm.Container_initialize = bm.initialize;
@@ -55,8 +57,11 @@
     }
 
     bm.animationEnded = function(target, type, name, next) {
-
-    }
+        if(this.waitFinish) {
+            this.waitFinish = false;
+            this._setIdleState();
+        }
+    };
 
     bm.onKeydown = function (event) {
         var activeKeys = KeyboardJS.activeKeys().join();
@@ -80,6 +85,7 @@
             this.setState({action: 'lean_move'});
         } else if (activeKeys == 'right,up' || activeKeys == 'right,up') {
             this.dX = 5;
+            this.waitFinish = true;
             this.setState({action: 'big_jump'});
         } else if (activeKeys == 'right,down' || activeKeys == 'right,down') {
             this.dX = 2;
@@ -87,15 +93,18 @@
         }
     }
 
+    bm._setIdleState = function() {
+        this.dX = 0;
+        this.setState({action: 'idle'});
+    }
+
     bm.onKeyup = function (event) {
-        if (this.state !== 'idle') {
-            this.dX = 0;
-            this.setState({action: 'idle'});
+        if (this.state !== 'idle' && !this.waitFinish) {
+            this._setIdleState();
         }
     }
 
     bm.setState = function (state) {
-
         var currentPos = {
             x: this.currentAnimmation.x,
             y: this.currentAnimmation.y
@@ -111,9 +120,6 @@
         this.currentAnimmation.x = currentPos.x;
         this.currentAnimmation.y = 288 - this.currentAnimmation.spriteSheet._frameHeight;
 //        this.currentAnimmation._currentFrame = 0;
-        this.currentAnimmation.onAnimationEnd = function() {
-            console.log('animation end')
-        }
 
         this.currentAnimmation.gotoAndPlay(state.action);
 
