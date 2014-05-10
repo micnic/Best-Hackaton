@@ -34,7 +34,7 @@
 
     bm.handleTick = function () {
 
-        this.currentAnimation.x = this.currentAnimation.x + this.dx;
+//        this.currentAnimation.x = this.currentAnimation.x + this.dx;
 //        this.currentAnimation.y = this.currentAnimation.y + this.dy;
     }
 
@@ -65,10 +65,17 @@
 
     bm.onKeydown = function (event) {
         var activeKeys = KeyboardJS.activeKeys().join();
+
+        if (activeKeys.indexOf('left') >= 0) {
+            this.currentAnimation.setTransform(0, 0, -1);
+        } else if (activeKeys.indexOf('right') >= 0) {
+            this.currentAnimation.setTransform(0, 0, 1);
+        }
+
         if (activeKeys == 'left') { //left
             if (this.state !== 'move') {
                 this.dx = -2;
-                this.setState({action: 'move', transformation: true});
+                this.setState({action: 'move'});
             }
         } else if (activeKeys == 'up') { //up
             this.setState({action: 'jump'});
@@ -79,30 +86,30 @@
             }
         } else if (activeKeys == 'down') { //down
             this.setState({action: 'lean'});
-        } else if (activeKeys == 'left,up' || activeKeys == 'up,left') {
+        } else if ((activeKeys == 'left,up' || activeKeys == 'up,left') && !this.waitFinish) {
             this.dx = -5;
             this.waitFinish = true;
             this.setState({action: 'big_jump'});
-        } else if (activeKeys == 'left,down' || activeKeys == 'down,left') {
+        } else if ((activeKeys == 'left,down' || activeKeys == 'down,left') && !this.waitFinish) {
             this.dx = -2;
             this.setState({action: 'lean_move'});
 
-        } else if (activeKeys == 'right,up' || activeKeys == 'up,right') {
+        } else if ((activeKeys == 'right,up' || activeKeys == 'up,right') && !this.waitFinish) {
             this.dx = 5;
             this.waitFinish = true;
             this.setState({action: 'big_jump'});
         } else if (activeKeys == 'right,down' || activeKeys == 'down,right') {
             this.dx = 2;
             this.setState({action: 'lean_move'});
-        } else if (activeKeys == 'space,spacebar') {
+        } else if (activeKeys == 'space,spacebar' && !this.waitFinish) {
             this.dx = 0;
             this.waitFinish = true;
             this.setState({action: 'hit'});
-        } else if (activeKeys == 'down,space,spacebar' || activeKeys == 'space,spacebar,down') {
+        } else if ((activeKeys == 'down,space,spacebar' || activeKeys == 'space,spacebar,down') && !this.waitFinish) {
             this.dx = 0;
             this.waitFinish = true;
             this.setState({action: 'lean_hit'});
-        } else if (activeKeys == 'up,space,spacebar' || activeKeys == 'space,spacebar,up') {
+        } else if ((activeKeys == 'up,space,spacebar' || activeKeys == 'space,spacebar,up') && !this.waitFinish) {
             this.dx = 0;
             this.waitFinish = true;
             this.setState({action: 'jump_hit'});
@@ -134,17 +141,17 @@
         this.state = state.action;
 
         this.currentAnimation = this.bnpAnimationObjects[state.action];
-        this.currentAnimation.x = currentPos.x;
+        this.currentAnimation.x = 100;//currentPos.x;
         this.currentAnimation.y = 288 - this.currentAnimation.spriteSheet._frameHeight;
 
-        if (this.currentAnimation.x >= screen_width) {
-            this.dx = 0;
-            this.currentAnimation.x = screen_width - this.currentAnimation.spriteSheet._frameWidth;
-            console.log(this.currentAnimation.x);
-        } else if (this.currentAnimation.x < 0) {
-            this.dx = 0;
-            this.currentAnimation.x = 0;
-        }
+//        if (this.currentAnimation.x >= screen_width) {
+//            this.dx = 0;
+//            this.currentAnimation.x = screen_width - this.currentAnimation.spriteSheet._frameWidth;
+//            console.log(this.currentAnimation.x);
+//        } else if (this.currentAnimation.x < 0) {
+//            this.dx = 0;
+//            this.currentAnimation.x = 0;
+//        }
 
         this.currentAnimation.gotoAndPlay(state.action);
 
