@@ -66,11 +66,11 @@
     bm.onKeydown = function (event) {
         var activeKeys = KeyboardJS.activeKeys().join();
 
-        if (activeKeys.indexOf('left') >= 0/* && !this.rotate*/) {
-            //this.rotate = true;
+        if (activeKeys.indexOf('left') >= 0 && !this.rotate) {
+            this.rotate = true;
             this.currentAnimation.setTransform(this.currentAnimation.x, this.currentAnimation.y, -1);
-        } else if (activeKeys.indexOf('right') >= 0/* && this.rotate*/) {
-            //this.rotate = false;
+        } else if (activeKeys.indexOf('right') >= 0 && this.rotate) {
+            this.rotate = false;
             this.currentAnimation.setTransform(this.currentAnimation.x, this.currentAnimation.y, 1);
         }
 
@@ -79,14 +79,15 @@
                 this.dx = -2;
                 this.setState({action: 'move'});
             }
-        } else if (activeKeys == 'up') {
+        } else if (activeKeys == 'up' && !this.waitFinish) {
+            this.waitFinish = true;
             this.setState({action: 'jump'});
         } else if (activeKeys == 'right') {
             if (this.state !== 'move') {
                 this.dx = 2;
                 this.setState({action: 'move'});
             }
-        } else if (activeKeys == 'down') {
+        } else if (activeKeys == 'down' && !this.waitFinish) {
             this.setState({action: 'lean'});
         } else if (activeKeys == 'left,up' || activeKeys == 'up,left') {
             this.dx = -5;
@@ -120,7 +121,11 @@
 
     bm._setIdleState = function () {
         this.dx = 0;
-        this.setState({action: 'idle'});
+        if (KeyboardJS.activeKeys() == 'down') {
+            this.setState({action: 'lean'});
+        } else {
+            this.setState({action: 'idle'});
+        }
     }
 
     bm.onKeyup = function (event) {
@@ -155,7 +160,11 @@
 //            this.currentAnimation.x = 0;
 //        }
 
-        this.currentAnimation.gotoAndPlay(state.action);
+        if (state.action == 'lean') {
+            this.currentAnimation.gotoAndStop(state.action);
+        } else {
+            this.currentAnimation.gotoAndPlay(state.action);
+        }
 
         stage.addChild(this.currentAnimation);
     }
