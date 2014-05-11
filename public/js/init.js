@@ -12,10 +12,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('keydown', function (event) {
         hero.onKeydown(event);
+        canvas.style.backgroundPosition = (parseInt(canvas.style.backgroundPosition || 0) - (hero.dx / 2)) + 'px bottom';
+        event.preventDefault();
     });
     document.addEventListener('keyup', function (event) {
         hero.onKeyup(event);
+        event.preventDefault();
     });
+
+    createjs.Sound.play('public/sound/DarkMystery.ogg');
 
     function init() {
         startGame();

@@ -93,14 +93,15 @@
             this.dx = -5;
             this.waitFinish = true;
             this.setState({action: 'big_jump'});
+            createjs.Sound.play('public/sound/swing.ogg');
         } else if (activeKeys == 'left,down' || activeKeys == 'down,left') {
             this.dx = -2;
             this.setState({action: 'lean_move'});
-
         } else if (activeKeys == 'right,up' || activeKeys == 'up,right') {
             this.dx = 5;
             this.waitFinish = true;
             this.setState({action: 'big_jump'});
+            createjs.Sound.play('public/sound/swing.ogg');
         } else if (activeKeys == 'right,down' || activeKeys == 'down,right') {
             this.dx = 2;
             this.setState({action: 'lean_move'});
@@ -108,14 +109,23 @@
             this.dx = 0;
             this.waitFinish = true;
             this.setState({action: 'hit'});
+            createjs.Sound.play('public/sound/sword1.ogg');
+            setTimeout(function () {
+                createjs.Sound.play('public/sound/sword2.ogg');
+            }, 1000);
         } else if (activeKeys == 'down,space,spacebar' || activeKeys == 'space,spacebar,down') {
             this.dx = 0;
             this.waitFinish = true;
             this.setState({action: 'lean_hit'});
+            createjs.Sound.play('public/sound/sword1.ogg');
+            setTimeout(function () {
+                createjs.Sound.play('public/sound/sword2.ogg');
+            }, 800);
         } else if (activeKeys == 'up,space,spacebar' || activeKeys == 'space,spacebar,up') {
             this.dx = 0;
             this.waitFinish = true;
             this.setState({action: 'jump_hit'});
+            createjs.Sound.play('public/sound/swordspin.ogg');
         }
     }
 

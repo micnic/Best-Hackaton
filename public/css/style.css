@@ -4,10 +4,16 @@ body {
 	position: relative;
 }
 
+#game_container {
+	background: url('../img/mountains.png') no-repeat center bottom / 170% auto #ccffff;
+	height: 288px;
+	margin: 0 auto;
+	width: 512px;
+}
+
 #game {
-    background-image: url('../img/background.png');
+	background: url('../img/hills.png') repeat-x 0 bottom / 150% auto;
 	outline: none;
-	/*background: #ccc;*/
 	margin: 0 auto;
 	top: 50%;
 	display: block;
